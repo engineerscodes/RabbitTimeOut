@@ -69,8 +69,6 @@ public class rev {
  */
 
 /*
-ConnectionRequestTimeout. This is timeout in millis for getting connection from connectionManager
-
 ConnectionTimeout. This is timeout in millis for establishing connection between source and destination
 
 ReadTimeout. This is timeout in millis which expects the response/result should be returned from the destination endpoint.
