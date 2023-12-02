@@ -41,7 +41,7 @@ public class rev {
                 restTemplate.setRequestFactory(reqFactory);
 
                 // Define the URL you want to make a request to
-                String apiUrl = "http://localhost:9090/admin/downloadFile?id=3"; // this endpoint waits for 2 min and consumer timeout is 1
+                String apiUrl = "http://localhost:9090/admin/downloadFile?id=3"; // this endpoint waits for 2 min and consumer timeout is 1 , replace with your endpoint 
 
                 // Make a GET request and retrieve the response
                 ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
