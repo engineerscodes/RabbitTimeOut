@@ -6,9 +6,12 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -32,7 +35,10 @@ public class rev {
                 System.out.println("[START] at  " + LocalDateTime.now());
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println(" [x] Received '" + message + "'");
+                SimpleClientHttpRequestFactory reqFactory = new SimpleClientHttpRequestFactory();
+                reqFactory.setReadTimeout(40000); //closing the connection before rabbitTimeout -> message will be in Unack will try again
                 RestTemplate restTemplate = new RestTemplate();
+                restTemplate.setRequestFactory(reqFactory);
 
                 // Define the URL you want to make a request to
                 String apiUrl = "http://localhost:9090/admin/downloadFile?id=3"; // this endpoint waits for 2 min and consumer timeout is 1
@@ -61,3 +67,11 @@ public class rev {
  rabbitmqctl set_policy queue_consumer_timeout "with_delivery_timeout\.*" '{"consumer-timeout":60000}' --apply-to Test_Rabbit_TimeOut
  rabbitmqctl set_policy queue_consumer_timeout "Test_Rabbit_TimeOut" '{"consumer-timeout": 60000}' --apply-to queues
  */
+
+/*
+ConnectionRequestTimeout. This is timeout in millis for getting connection from connectionManager
+
+ConnectionTimeout. This is timeout in millis for establishing connection between source and destination
+
+ReadTimeout. This is timeout in millis which expects the response/result should be returned from the destination endpoint.
+*/
