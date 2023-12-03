@@ -4,3 +4,4 @@
 - refer : https://github.com/rabbitmq/rabbitmq-server/pull/2990
 
 - Learning : Use readTimout & connection timout in RestTemplate if working with old MS
+- Check Images folder and logs file
